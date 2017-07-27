@@ -38,8 +38,8 @@ InstructionsEmitter.prototype = {
             var re = /^(\d) (\d)$/;
             var matches = re.exec(lawn_line);
             var lawn = {
-                x: matches[1],
-                y: matches[2]
+                x: parseInt(matches[1]),
+                y: parseInt(matches[2])
             };
             that.emit('lawn', lawn);
 
@@ -63,8 +63,8 @@ InstructionsEmitter.prototype = {
 
                     if (instruct_matches) {
                         that.emit('mower', {
-                            x: coord_matches[1],
-                            y: coord_matches[2],
+                            x: parseInt(coord_matches[1]),
+                            y: parseInt(coord_matches[2]),
                             direction: coord_matches[3],
                             instructions: instructions
                         });

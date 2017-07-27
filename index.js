@@ -16,12 +16,12 @@ engine.on('end', function () {
     console.log('Instructions file fully processed!');
 });
 
-engine.on('lawn', function(data) {
-    lawn = data;
+engine.on('lawn', function(lawn_data) {
+    lawn = lawn_data;
 });
 
-engine.on('mower', function (data) {
-    var mower = new Mower(++mower_id, data, lawn);
+engine.on('mower', function (mower_data) {
+    var mower = new Mower(++mower_id, mower_data, lawn);
+    mower.showAffectedLawn();
     mower.showCoordinates();
-    mower.showInstructions();
 });
