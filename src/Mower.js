@@ -1,9 +1,15 @@
 
+var colors = require('colors/safe');
+
+
 var Mower = function (id, mower_infos, lawn) {
     this.id = id;
     this.x = mower_infos.x;
+    this.x_origin = mower_infos.x;
     this.y = mower_infos.y;
+    this.y_origin = mower_infos.y;
     this.direction = mower_infos.direction;
+    this.dir_origin = mower_infos.direction;
     this.instructions = mower_infos.instructions;
     this.lawn = lawn;
 
@@ -15,34 +21,46 @@ Mower.prototype = {
 
     showCharacteristics: function () {
         console.log(
-            'Mower ' + this.id + ' [ ' +
-            'X: ' + this.x + '; Y: ' + this.y + '; Dir: ' + this.direction + '; Instructions: ' + this.instructions +
-            ' ]'
+            colors.blue(
+                'Mower ' + this.id + ' [ ' +
+                'X: ' + this.x + '; Y: ' + this.y + '; Dir: ' + this.direction + '; Instructions: ' + this.instructions +
+                ' ]'
+            )
         );
     },
 
     showInstructions: function () {
         console.log(
-            'Mower ' + this.id + ' [ ' +
-            'Instructions: ' + this.instructions +
-            ' ]'
+            console.white(
+                'Mower ' + this.id + ' [ ' +
+                'Instructions: ' + this.instructions +
+                ' ]'
+            )
+        );
+    },
+
+    showOriginatingCoordinates: function () {
+        console.log(
+            colors.green(
+                'Mower ' + this.id + ' originating coordinates [ ' +
+                'X: ' + this.x_origin + '; Y: ' + this.y_origin + '; Dir: ' + this.dir_origin +
+                ' ]'
+            )
         );
     },
 
     showCoordinates: function () {
         console.log(
-            'Mower ' + this.id + ' [ ' +
-            'X: ' + this.x + '; Y: ' + this.y + '; Dir: ' + this.direction +
-            ' ]'
+            colors.red(
+                'Mower ' + this.id + ' current coordinates     [ ' +
+                'X: ' + this.x + '; Y: ' + this.y + '; Dir: ' + this.direction +
+                ' ]'
+            )
         );
     },
 
     showAffectedLawn: function () {
-        console.log(
-            'Mower ' + this.id + ' [ ' +
-            'Lawn Width: ' + this.lawn.x + '; ' +
-            'Lawn Height: ' + this.lawn.y + ' ]'
-        );
+        this.lawn.showCharacteristics(colors.green('Mower ' + this.id ));
     },
     
     turnRight: function () {
@@ -84,12 +102,12 @@ Mower.prototype = {
                 }
                 break;
             case 'S':
-                if (y > 1) {
+                if (y > 0) {
                     y -= 1;
                 }
                 break;
             case 'W':
-                if (x > 1) {
+                if (x > 0) {
                     x -= 1;
                 }
                 break;
