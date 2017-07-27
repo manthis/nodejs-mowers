@@ -3,14 +3,14 @@ var fs = require('fs');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
-var InstructionsEmitter = function () {
-    this.INSTRUCTIONS_FILE = './resources/mowers.cfg';
+var InstructionsEmitter = function (path) {
+    this.instructions_file = path;
 };
 
 InstructionsEmitter.prototype = {
 
     /**
-     * This function allows to parse file specified in INSTRUCTIONS_FILE in order to get the lawn dimensions,
+     * This function allows to parse file specified in instructions_file in order to get the lawn dimensions,
      * the mower originating coordinates on the lawn and the mower's instructions.
      * The following events are emitted:
      * 1. start: only indicates the beginning of the file processing
@@ -22,7 +22,7 @@ InstructionsEmitter.prototype = {
 
         var that = this;
 
-        fs.readFile(this.INSTRUCTIONS_FILE, function(error, data) {
+        fs.readFile(this.instructions_file, function(error, data) {
 
             if (error) {
                 throw error;

@@ -2,13 +2,14 @@
 var Mower = require('./src/Mower');
 var Lawn = require('./src/Lawn');
 var InstructionsEmitter = require('./src/InstructionsEmitter');
-var engine = new InstructionsEmitter();
 
 
 process.on('exit', function() {
     console.log('End.\n')
 });
 
+
+var engine = new InstructionsEmitter('./resources/mowers.cfg');
 engine.startMowers();
 
 var mower_id = 0;
@@ -21,6 +22,7 @@ engine.on('start', function () {
 
 engine.on('end', function () {
 
+    // We display the processed coordinates as well as the originating coordinates of the mowers
     mowers.forEach(function (mower) {
         mower.showOriginatingCoordinates();
         mower.showCoordinates();
@@ -31,8 +33,11 @@ engine.on('end', function () {
 });
 
 engine.on('lawn', function(lawn_data) {
+
+    // We create our lawn object
     lawn = new Lawn(lawn_data.x, lawn_data.y);
     lawn.showCharacteristics();
+
 });
 
 engine.on('mower', function (mower_data) {
@@ -56,5 +61,7 @@ engine.on('mower', function (mower_data) {
         }
     });
 
+    // We backup the mower for later on
     mowers.push(mower);
+
 });
